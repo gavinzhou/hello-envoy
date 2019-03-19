@@ -13,7 +13,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	myals "accesslogs"
+	myals "github.com/gavinzhou/hello-envoy/src/accesslogs"
 
 	"github.com/envoyproxy/go-control-plane/pkg/cache"
 	xds "github.com/envoyproxy/go-control-plane/pkg/server"
@@ -191,9 +191,9 @@ func RunManagementGateway(ctx context.Context, srv xds.Server, port uint) {
 			log.Error(err)
 		}
 	}()
-	if err := server.Shutdown(ctx); err != nil {
-		log.Error(err)
-	}
+	// if err := server.Shutdown(ctx); err != nil {
+	// 	log.Error(err)
+	// }
 }
 
 func main() {
@@ -213,7 +213,7 @@ func main() {
 	}
 	config = cache.NewSnapshotCache(mode == Ads, Hasher{}, logger{})
 
-	srv := xds.NewServer(config, cb)
+	srv := xds.NewServer(config, nil)
 
 	//als := &accesslogs.AccessLogService{}
 	als := &myals.AccessLogService{}
@@ -257,9 +257,9 @@ func main() {
 
 		c := []cache.Resource{
 			&v2.Cluster{
-				Name:            clusterName,
-				ConnectTimeout:  2 * time.Second,
-				Type:            v2.Cluster_LOGICAL_DNS,
+				Name:           clusterName,
+				ConnectTimeout: 2 * time.Second,
+				// Type:            v2.Cluster_LOGICAL_DNS,
 				DnsLookupFamily: v2.Cluster_V4_ONLY,
 				LbPolicy:        v2.Cluster_ROUND_ROBIN,
 				Hosts:           []*core.Address{h},
@@ -314,7 +314,8 @@ func main() {
 				Name: util.Router,
 			}},
 		}
-		pbst, err := util.MessageToStruct(manager)
+		// pbst, err := util.MessageToStruct(manager)
+		_, err := util.MessageToStruct(manager)
 		if err != nil {
 			panic(err)
 		}
@@ -335,8 +336,8 @@ func main() {
 				},
 				FilterChains: []listener.FilterChain{{
 					Filters: []listener.Filter{{
-						Name:   util.HTTPConnectionManager,
-						Config: pbst,
+						Name: util.HTTPConnectionManager,
+						// Config: pbst,
 					}},
 				}},
 			}}

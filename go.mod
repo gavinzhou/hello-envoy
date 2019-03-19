@@ -1,4 +1,4 @@
-module github.com/salrashid123/envoy_control
+module github.com/gavinzhou/hello-envoy
 
 go 1.12
 
