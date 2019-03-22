@@ -4,21 +4,20 @@ admin:
     socket_address:
       address: 127.0.0.1
       port_value: 9000
+
 dynamic_resources:
-  ads_config:
-    api_type: GRPC
-    cluster_names:
-    - xds_cluster
-  cds_config:
-    api_config_source:
-      api_type: GRPC
-      cluster_names:
-      - xds_cluster
   lds_config:
     api_config_source:
       api_type: GRPC
-      cluster_names:
-      - xds_cluster
+      grpc_services:
+        envoy_grpc:
+          cluster_name: xds_cluster
+  cds_config:
+    api_config_source:
+      api_type: GRPC
+      grpc_services:
+        envoy_grpc:
+          cluster_name: xds_cluster
 node:
   cluster: service_greeter
   id: test-id
@@ -31,4 +30,4 @@ static_resources:
     - socket_address:
         address: 127.0.0.1
         port_value: 18000
-    http2_protocol_options: {}    
+    http2_protocol_options: {}
