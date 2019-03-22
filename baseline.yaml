@@ -18,7 +18,6 @@ dynamic_resources:
       grpc_services:
         envoy_grpc:
           cluster_name: xds_cluster
-
 node:
   cluster: "test"
   id: "envoy-64.58"
@@ -26,9 +25,16 @@ node:
 static_resources:
   clusters:
   - name: xds_cluster
-    connect_timeout: 1s
-    hosts:
-    - socket_address:
-        address: 127.0.0.1
-        port_value: 18000
+    connect_timeout: 0.25s
+    type: STATIC
+    lb_policy: ROUND_ROBIN
     http2_protocol_options: {}
+    load_assignment:
+      cluster_name: xds_cluster
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: 127.0.0.1
+                port_value: 5678
