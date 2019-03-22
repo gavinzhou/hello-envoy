@@ -18,9 +18,10 @@ dynamic_resources:
       grpc_services:
         envoy_grpc:
           cluster_name: xds_cluster
+
 node:
-  cluster: service_greeter
-  id: test-id
+  cluster: "test"
+  id: "envoy-64.58"
 
 static_resources:
   clusters:
