@@ -51,7 +51,7 @@ func ADD_Cluster_With_Static_Endpoint(n *NodeConfig) {
 		// Type:           api.Cluster_STATIC,
 		LbPolicy: api.Cluster_ROUND_ROBIN,
 		LoadAssignment: &api.ClusterLoadAssignment{
-			ClusterName: "none",
+			ClusterName: "xds_cluster",
 			Endpoints: []endpoint.LocalityLbEndpoints{
 				endpoint.LocalityLbEndpoints{
 					LbEndpoints: []endpoint.LbEndpoint{{
@@ -81,7 +81,7 @@ func ADD_Cluster_With_Static_Endpoint(n *NodeConfig) {
 
 func ADD_Cluster_With_Dynamic_Endpoint(n *NodeConfig) {
 	endpoint := &api.ClusterLoadAssignment{
-		ClusterName: "cluster_with_dynamic_endpoint",
+		ClusterName: "xds_cluster",
 		Endpoints: []endpoint.LocalityLbEndpoints{
 			endpoint.LocalityLbEndpoints{
 				LbEndpoints: []endpoint.LbEndpoint{{
@@ -141,7 +141,7 @@ func ADD_Cluster_With_Dynamic_Endpoint(n *NodeConfig) {
 					},
 				},
 			},
-			//            ServiceName: "dynamic_endpoints", //与endpoint中的ClusterName对应。
+			//            ServiceName: "xds_cluster", // endpoint ClusterName
 		},
 	}
 
