@@ -1,8 +1,3 @@
-// Create: 2018/12/29 18:32:00 Change: 2018/12/29 18:32:00
-// FileName: main.go
-//
-// Distributed under terms of the GPL license.
-
 package main
 
 import (
